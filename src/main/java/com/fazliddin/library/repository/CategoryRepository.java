@@ -1,12 +1,14 @@
 package com.fazliddin.library.repository;
 
-import com.fazliddin.library.entity.User;
+import com.fazliddin.library.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Fazliddin Xamdamov
  * @date 06.04.2022  14:33
  * @project app-fast-food
  */
-public interface UserRepo extends JpaRepository<User , Integer> {
+@Repository
+public interface CategoryRepository extends JpaRepository<Category, Long> {
 }

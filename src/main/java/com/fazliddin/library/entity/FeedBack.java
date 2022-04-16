@@ -25,8 +25,6 @@ import javax.persistence.*;
 @Where(clause = "deleted=false")
 public class FeedBack extends AbstractLong {
 
-    //todo FAZLIDDIN aka CRUD qilishingiz kk ekan!!! 26.01
-
     @Column(name = "title", nullable = false)
     private String title;
 
