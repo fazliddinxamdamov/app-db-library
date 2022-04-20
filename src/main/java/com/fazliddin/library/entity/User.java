@@ -49,6 +49,9 @@ public class User extends AbstractUUID {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "telegram_id")
+    private Long telegramId;
+
     @Column(name = "language")
     @Enumerated(EnumType.STRING)
     private LanguageEnum language;
@@ -62,6 +65,21 @@ public class User extends AbstractUUID {
 
     @OneToMany
     private List<Address> defaultAddress;
+
+    @OneToOne
+    @JoinColumn(name = "photo_id")
+    private Attachment photo;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_permission",
+            joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "permission_id")})
+    private Set<Permission> permissions;//USERNING HUQUQLARI
+
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_branch")
@@ -94,13 +112,39 @@ public class User extends AbstractUUID {
     @Builder.Default
     private boolean enabled = false;
 
-    public User(String phoneNumber, String firstName, String lastName, District district, LanguageEnum language) {
+    public String getPassword() {
+        return this.password;
+    }
+
+    public String getUsername() {
+        return this.phoneNumber;
+    }
+
+    public boolean isAccountNonExpired() {
+        return this.accountNonExpired;
+    }
+
+    public boolean isAccountNonLocked() {
+        return this.accountNonLocked;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return this.credentialsNonExpired;
+    }
+
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+
+    public User(String phoneNumber, String firstName, String lastName, District district, LanguageEnum language, Role role) {
 
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
         this.lastName = lastName;
         this.district = district;
         this.language = language;
+        this.role = role;
     }
 
     public String getFullName(){

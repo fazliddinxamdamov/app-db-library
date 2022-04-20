@@ -1,18 +1,19 @@
 package com.fazliddin.library.entity;
 
 import com.fazliddin.library.template.AbstractLong;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+//@RequiredArgsConstructor
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @Entity(name = "category")
 @SQLDelete(sql = "update category set deleted=true where id=?")
@@ -24,6 +25,7 @@ public class Category extends AbstractLong {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
+    @ToString.Exclude
     private Category parent;
 
     @OneToOne
@@ -33,6 +35,34 @@ public class Category extends AbstractLong {
 
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "discount_id")
+    @ToString.Exclude
     private Discount discount;
 
+    public Category(Long id, String name, Category parent, Attachment photo, Discount discount) {
+        super(id);
+        this.name = name;
+        this.parent = parent;
+        this.photo = photo;
+        this.discount = discount;
+    }
+
+    public Category(String name, Category parent, Attachment photo, Discount discount) {
+        this.name = name;
+        this.parent = parent;
+        this.photo = photo;
+        this.discount = discount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Category category = (Category) o;
+        return getId() != null && Objects.equals(getId(), category.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

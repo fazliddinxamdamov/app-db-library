@@ -1,5 +1,6 @@
 package com.fazliddin.library.entity;
 
+import com.fazliddin.library.enums.RoleTypeEnum;
 import com.fazliddin.library.template.AbstractLong;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -9,26 +10,23 @@ import javax.persistence.*;
 
 /**
  * @author Fazliddin Xamdamov
- * @date 12.04.2022  16:26
+ * @date 18.04.2022  15:47
  * @project app-fast-food
  */
-
 @Entity
-@Table(name = "district")
+@Table(name = "roles")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Where(clause = "deleted=false")
-@SQLDelete(sql = "update district set deleted = false where id = ?")
-public class District extends AbstractLong {
-
+@SQLDelete(sql = "update roles set deleted = false where id = ?")
+public class Role extends AbstractLong {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "region_id")
-    private Region region;
-
+    @Column(name = "role_type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private RoleTypeEnum roleType;
 }
