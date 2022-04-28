@@ -147,6 +147,16 @@ public class User extends AbstractUUID {
         this.role = role;
     }
 
+    public User(String phoneNumber, String firstName, String lastName, District district, LanguageEnum language, Role role, Boolean online) {
+        this.phoneNumber = phoneNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.district = district;
+        this.language = language;
+        this.role = role;
+        this.online = online;
+    }
+
     public String getFullName(){
         return this.lastName + " " + this.firstName;
     }

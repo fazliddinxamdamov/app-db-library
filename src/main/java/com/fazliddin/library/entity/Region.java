@@ -1,6 +1,6 @@
 package com.fazliddin.library.entity;
 
-import com.fazliddin.library.template.AbstractUUID;
+import com.fazliddin.library.template.AbstractLong;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -23,7 +23,7 @@ import javax.persistence.Table;
 @Builder
 @Where(clause = "deleted=false")
 @SQLDelete(sql = "update region set deleted = false where id = ?")
-public class Region extends AbstractUUID {
+public class Region extends AbstractLong {
 
     @Column(name = "name", nullable = false)
     private String name;
