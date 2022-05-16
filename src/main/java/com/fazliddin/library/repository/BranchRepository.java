@@ -1,6 +1,8 @@
 package com.fazliddin.library.repository;
 
 import com.fazliddin.library.entity.Branch;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,4 +13,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface BranchRepository extends JpaRepository<Branch, Long> {
+    Page<Branch> findAllByRegionId(PageRequest pageRequest, Long regionId);
+
+    Page<Branch> findAllByDistrictId(PageRequest pageRequest, Long districtId);
 }
